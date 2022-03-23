@@ -27,10 +27,11 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get install -y expect
-        pip3 install gdown
 
     - name: Download Build
       run: |
+        if [[ ${DOWNLOAD_LINK} == *"drive.google.com"* ]]; then
+        pip install gdown
         if [[ ${DOWNLOAD_LINK} == *"file"* ]]; then
         DOWNLOAD_LINK=$(echo ${DOWNLOAD_LINK} | cut -d / -f 6)
         elif [[ $DOWNLOAD_LINK == *"id"* ]]; then
@@ -77,3 +78,4 @@ jobs:
         *Rom:* \`${FILE_NAME}\`
         *Size:* \`${FILE_SIZE}\`
         *Download Link:* [Here](${SERVER_LINK}/${FILE_NAME})""" &> /dev/null
+        
